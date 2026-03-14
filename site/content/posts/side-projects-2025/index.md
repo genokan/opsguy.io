@@ -13,6 +13,8 @@ Not full self-deprecation — laziness has a useful side. It drives me to automa
 
 The shadow side of laziness is that **if there's no easy path, I don't start**. Writing a full stack application from scratch was never the easy path. So I didn't. The list of ideas just kept growing.
 
+<!--more-->
+
 ## media-analyzer
 
 The project I'm most excited about is [media-analyzer](https://github.com/genokan/media-analyzer), and it's something I've been wanting to build for a long time.
