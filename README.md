@@ -37,3 +37,19 @@ cd site && hugo new posts/my-post-title/index.md
 # New page
 cd site && hugo new pagename/index.md
 ```
+
+## Photo galleries
+
+Photo posts are page bundles: put `index.md` and its images in the same folder.
+The reusable `gallery` shortcode renders every image in that folder as a
+responsive grid with captions and an expand-on-click view.
+
+```text
+site/content/posts/cooking-over-the-years/
+├── index.md
+├── first-sourdough-loaf.jpg
+└── smoked-brisket.jpg
+```
+
+Use `{{< gallery >}}` to show all images, or choose the display order with
+`{{< gallery images="first-sourdough-loaf.jpg,smoked-brisket.jpg" >}}`.
