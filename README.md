@@ -21,12 +21,22 @@ Site runs at http://localhost:1313
 
 ## Deployment
 
-Push to `main` triggers GitHub Actions workflow:
-1. Builds site with Hugo
-2. Syncs to S3
-3. Invalidates CloudFront cache
+The GitHub Actions workflow works as follows:
+1. Pull requests to `main` build the site with Hugo for validation.
+2. Pushing a version tag (for example, `v1.3`) builds and deploys the static
+   site to Cloudflare Pages.
 
-PRs to `main` run the build for validation but don't deploy.
+Before the first production deploy, create a **Direct Upload** Cloudflare Pages
+project named `opsguy-io` with `main` as its production branch. In GitHub, add
+these repository secrets:
+
+- `CLOUDFLARE_API_TOKEN`: an account-scoped API token with Cloudflare Pages
+  **Edit** permission (use an API token, not a Global API key).
+- `CLOUDFLARE_ACCOUNT_ID`: the Cloudflare account ID that owns the Pages
+  project.
+
+After the first deployment, attach `opsguy.io` in the Pages project's Custom
+domains settings.
 
 ## Creating Content
 
