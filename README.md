@@ -22,9 +22,11 @@ Site runs at http://localhost:1313
 ## Deployment
 
 The GitHub Actions workflow works as follows:
-1. Pull requests to `main` build the site with Hugo for validation.
-2. Pushing a version tag (for example, `v1.3`) builds and deploys the static
-   site to Cloudflare Pages.
+1. Pull requests to `main` build the site with Hugo and deploy a Cloudflare
+   Pages preview. Pull requests from forks build without a preview because
+   GitHub does not expose repository secrets to them.
+2. Pushing a version tag (for example, `v1.3`) deploys the production site to
+   Cloudflare Pages.
 
 Before the first production deploy, create a **Direct Upload** Cloudflare Pages
 project named `opsguy-io` with `main` as its production branch. In GitHub, add

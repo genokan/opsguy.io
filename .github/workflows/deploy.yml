@@ -30,11 +30,16 @@ jobs:
           hugo version
 
       - name: Build
-        run: hugo --minify
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+            branch_alias=$(printf '%s' "$GITHUB_HEAD_REF" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g')
+            hugo --minify --baseURL "https://${branch_alias}.opsguy-io.pages.dev/"
+          else
+            hugo --minify
+          fi
         working-directory: ./site
 
       - name: Upload artifact
-        if: startsWith(github.ref, 'refs/tags/v')
         uses: actions/upload-artifact@v4
         with:
           name: site
@@ -42,7 +47,10 @@ jobs:
 
   deploy:
     needs: build
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: >-
+      startsWith(github.ref, 'refs/tags/v') ||
+      (github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
@@ -51,10 +59,20 @@ jobs:
           name: site
           path: ./public
 
-      - name: Deploy to Cloudflare Pages
+      - name: Deploy production site to Cloudflare Pages
+        if: startsWith(github.ref, 'refs/tags/v')
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy ./public --project-name=opsguy-io --branch=main
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy preview to Cloudflare Pages
+        if: github.event_name == 'pull_request'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy ./public --project-name=opsguy-io --branch=${{ github.head_ref }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
