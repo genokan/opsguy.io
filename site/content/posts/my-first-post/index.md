@@ -1,11 +1,13 @@
 +++
-date = 2025-01-17
+date = 2026-01-17
 title = "Hello, World"
 description = "After thinking about it for way too long, I finally started a blog."
 tags = ["meta"]
 +++
 
 Welcome. After thinking about it for way too long, I've finally decided to start writing publicly about things I find interesting.
+
+<!--more-->
 
 ## Why Start a Blog?
 

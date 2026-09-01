@@ -1,0 +1,36 @@
+{{- $resources := .Page.Resources.ByType "image" -}}
+{{- $imageNames := split (.Get "images" | default "") "," -}}
+
+{{- if gt (len $imageNames) 0 -}}
+  {{- $resources = slice -}}
+  {{- range $name := $imageNames -}}
+    {{- with $.Page.Resources.GetMatch (strings.TrimSpace $name) -}}
+      {{- $resources = $resources | append . -}}
+    {{- else -}}
+      {{- warnf "gallery shortcode: %q was not found in %s" $name $.Page.File.Path -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- with $resources -}}
+  <section class="cooking-gallery" aria-label="Photo gallery">
+    {{- range . -}}
+      {{- $thumbnail := .Fill "900x675 Center webp q82" -}}
+      {{- $large := .Resize "1800x webp q86" -}}
+      {{- $label := .Name | strings.TrimSuffix (path.Ext .Name) | humanize -}}
+      <figure class="cooking-gallery__item">
+        <button class="cooking-gallery__button" type="button" data-gallery-src="{{ $large.RelPermalink }}" data-gallery-alt="{{ $label }}">
+          <img
+            src="{{ $thumbnail.RelPermalink }}"
+            width="{{ $thumbnail.Width }}"
+            height="{{ $thumbnail.Height }}"
+            alt="{{ $label }}"
+            loading="lazy"
+            decoding="async"
+          >
+        </button>
+        <figcaption>{{ $label }}</figcaption>
+      </figure>
+    {{- end -}}
+  </section>
+{{- end -}}
