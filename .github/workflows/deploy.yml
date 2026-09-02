@@ -33,7 +33,7 @@ jobs:
         run: |
           if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
             branch_alias=$(printf '%s' "$GITHUB_HEAD_REF" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g')
-            hugo --minify --baseURL "https://${branch_alias}.opsguy-io.pages.dev/"
+            hugo --buildDrafts --minify --baseURL "https://${branch_alias}.opsguy-io.pages.dev/"
           else
             hugo --minify
           fi
