@@ -3,6 +3,8 @@ date = 2026-09-02
 title = "Cooking Is a Series of Rabbit Holes"
 description = "Steaks, sourdough, Chinese takeout standards, and the things I am still trying to get right."
 tags = ["cooking", "food", "grilling", "baking", "Chinese food"]
+feature = "tomahawk-over-flame.webp"
+featureAlt = "A tomahawk steak getting a hard sear over open flame."
 draft = true
 +++
 
