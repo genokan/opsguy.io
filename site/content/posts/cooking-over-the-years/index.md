@@ -5,7 +5,7 @@ description = "Steaks, sourdough, Chinese takeout standards, and the things I am
 tags = ["cooking", "food", "grilling", "baking", "Chinese food"]
 feature = "tomahawk-over-flame.webp"
 featureAlt = "A tomahawk steak getting a hard sear over open flame."
-draft = true
+draft = false
 +++
 
 I almost went to cooking school when I got out of high school. I did not go, but cooking has always been around in one form or another. I grew up in the Midwest, where grilling was just part of life. My dad grilled when I was a kid, and I started doing it young too.
